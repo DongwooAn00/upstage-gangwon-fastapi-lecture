@@ -3,6 +3,8 @@ from datetime import datetime
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from app.service.user_service import UserService
+
 # create user
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -23,7 +25,11 @@ class UserResponse(BaseModel):
 async def create_user_api(
         user_create_request: UserCreateRequest,
 ):
-    # 아직 저장 로직은 없음
+    user_service = UserService()
+    user_service.create_user(
+        name=user_create_request.name,
+        email=user_create_request.email
+    )
     return UserResponse(
         id=0,
         name=user_create_request.name,
