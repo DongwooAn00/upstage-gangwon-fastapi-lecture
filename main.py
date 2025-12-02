@@ -15,6 +15,12 @@ def hello():
     return {"message": "Hello FastAPI!"}
 
 
+@app.get("/error500")
+def hello():
+    raise Exception("Something went wrong!")
+
+
+
 # Frontend routes
 @app.get("/")
 async def read_index():
