@@ -6,7 +6,7 @@ from app.models.entities import User
 
 class UserRepository:
     def __init__(self):
-        self._users_memory_db: Dict[int, User] = {}
+        self._users_memory_db: Dict[str, User] = {}
         self._next_id = 1
 
     def save(self, name: str, email: str) -> User:
