@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: upstage-gangwon
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: upstage-gangwon-backend
+  namespace: upstage-gangwon
+  labels:
+    app: upstage-gangwon-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: upstage-gangwon-backend
+  template:
+    metadata:
+      labels:
+        app: upstage-gangwon-backend
+    spec:
+      containers:
+        - name: upstage-gangwon-backend
+          image: upstage-gangwon-backend:lite
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8800
+          livenessProbe:
+            httpGet:
+              path: /hello
+              port: 8800
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /hello
+              port: 8800
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: upstage-gangwon-backend
+  namespace: upstage-gangwon
+  labels:
+    app: upstage-gangwon-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: upstage-gangwon-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8800
