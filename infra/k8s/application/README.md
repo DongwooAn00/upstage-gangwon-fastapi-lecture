@@ -11,44 +11,22 @@ kubectl apply -f .
 kubectl get all -n gangwon
 ```
 
-## 접근 방법
-
-NodePort로 접근:
-```bash
-# minikube 사용 시
-minikube service backend-nodeport -n gangwon
-
-# 직접 접근 (노드 IP 필요)
-curl http://<node-ip>:30880/agent/health
-```
-
-## 테스트
-
-```bash
-curl -X POST http://<node-ip>:30880/agent/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "테스트"}'
-```
-
 ## 로그 확인
    ```bash
    # Check all resources
-   kubectl get all -n upstage-gangwon
+   kubectl get all -n gangwon
 
    # Check pod logs
-   kubectl logs -f deployment/upstage-gangwon-backend -n upstage-gangwon
-   kubectl logs -f deployment/chromadb -n upstage-gangwon
+   kubectl logs -f deployment/upstage-gangwon-backend -n gangwon
+   kubectl logs -f deployment/chromadb -n gangwon
    ```
 
 ## 사전 설정
 
 - **UPSTAGE_API_KEY**: Update the base64 encoded value in `02-configmap.yaml`
-- **Domain**: Change `upstage-gangwon.local` in `05-ingress.yaml` to your actual domain
+- **Domain**: Change `gangwon.local` in `05-ingress.yaml` to your actual domain
 - **Resources**: Adjust CPU/memory requests and limits in deployment manifests
 
-
-## 정리
-
 ```bash
-`kubectl delete -n gangwon`
+`kubectl delete namespace gangwon`
 ```
