@@ -16,6 +16,7 @@ spec:
       containers:
         - name: stress
           image: polinux/stress:1.0.4
+          command: ["stress"]
           args: ["--vm", "1", "--vm-bytes", "300M", "--timeout", "3600s"]
           resources:
             requests:
