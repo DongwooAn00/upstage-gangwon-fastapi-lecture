@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stress-no-limit
+  namespace: gangwon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stress-no-limit
+  template:
+    metadata:
+      labels:
+        app: stress-no-limit
+    spec:
+      containers:
+        - name: stress
+          image: polinux/stress:1.0.4
+          args: ["--cpu", "1", "--vm", "1", "--vm-bytes", "200M", "--timeout", "3600s"]
+          # resources 없음 (requests/limits 미설정)
