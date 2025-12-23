@@ -1,8 +1,8 @@
-name: Build & Push Image (GHCR)
+name: Build & Version &Push Image (GHCR)
 
 on:
   push:
-    branches: [ deploy/registry ]
+    branches: [ deploy/version ]
 
 jobs:
   build:
